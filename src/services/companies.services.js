@@ -6,6 +6,7 @@ const responses = require("../utils/response");
 const generateResetPin = require('../utils/generateResetPin');
 const sendMail = require("../utils/sendMail");
 
+
     // create company account logic
 async function createCompany (payload) {
     const foundName = await Company.findOne({name: payload.name});
@@ -22,13 +23,14 @@ async function createCompany (payload) {
 
         // create company admin logic
 async function createAdmin (payload) {
-    const foundEmailOrPhone = await Staff.findOne({$or: [
-      {email: payload.email}, 
-      {phone: payload.phone}
+  const foundEmailOrPhone = await Staff.findOne({
+    $or: [
+      { email: payload.email },
+      { phone: payload.phone }
     ]})
     if(foundEmailOrPhone) {
         return responses.buildFailureResponse("Admin phone or email already registered", 400)
-    }
+  };
     const saltRounds = 10;
     const generatedSalt = await bcrypt.genSalt(saltRounds)
     const hashedPassword = await bcrypt.hash(payload.password, generatedSalt)
