@@ -2,11 +2,14 @@
 
 this app is for verifying employees
 it includes endpoints like: 
-creating company account,
-creating an Admin account in charge of creating staff
-implenting Login endpoint,
-forgot password end point
-reset pin end point
+a. creating company account,
+b. creating an Admin account in charge of creating staff
+c. implenting Login endpoint,
+d. forgot password end point
+e. reset pin end point
+f. Searching staff end point
+ 
 
+ and 
 connecting to mongoDB for storage
 deploying to the server
