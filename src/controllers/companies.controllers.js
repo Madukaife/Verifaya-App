@@ -47,6 +47,11 @@ const resetPassword = async (req, res) => {
   res.status(data.statusCode).json(data);
 };
 
+//search companies staff function
+const searchStaff = async (req, res) => {
+  const data = await companyServices.searchStaff(req.query);
+  res.status(data.statusCode).json(data);
+};
 
 module.exports = {
   createAccount,
@@ -56,6 +61,7 @@ module.exports = {
   getAllCompanies,
   forgotPassword,
   resetPassword,
+  searchStaff,
 };
 
 

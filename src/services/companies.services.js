@@ -100,12 +100,6 @@ async function getAllCompanies() {
   
   // forget password logic
 const forgotPassword = async (payload) => {
-    /**
-     * Check or verify email address
-     * Generate reset pin
-     * Update the user with the reset pin (add reset pin to user document)
-     * Send reset pin to user email
-     * */
        
     const emailFound = await Staff.findOne({ email: payload.email })
     if (!emailFound) {
@@ -130,12 +124,7 @@ const forgotPassword = async (payload) => {
 
 // reset password logic
 const resetPassword = async (payload) => {
-    /**
-     * Validate if user exists with reset pin
-     * Hash the new password
-     * Store the new hashed password
-     */
-  
+   
     const foundUserAndPin = await Staff.findOne({email: payload.email,resetPin: payload.resetPin, });
     if (!foundUserAndPin) {
       return responses.buildFailureResponse('Reset Pin Invalid', 400);
@@ -157,6 +146,27 @@ const resetPassword = async (payload) => {
       updatedUser
     );
   };
+
+  // search for company staff from database          
+
+async function searchStaff(query) {
+  try {
+    const searchedStaff = query.search
+      ? {
+        $or: [
+          { firstName: { $regex:query.search, $options: "i" } },
+          { lastName: { $regex:query.search, $options: "i" } },
+          { phone: { $regex:query.search, $options: "i" } },
+        ],
+        Company: query.Company,
+      }
+      : {};
+    const foundStaff = await Staff.find(searchedStaff);
+    return responses.buildSuccessResponse('Successfully fetched staff', 200, foundStaff);
+  } catch (error) {
+    return responses.buildFailureResponse('Failed to fetch staff', 500);
+  }
+}
   
   module.exports = {
     createCompany,
@@ -166,5 +176,6 @@ const resetPassword = async (payload) => {
     getAllCompanies,
     forgotPassword,
     resetPassword,
+    searchStaff,
   };
   
