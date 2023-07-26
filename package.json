@@ -10,12 +10,16 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "build": "babel src -d build"
+    "build": "babel src -d build",
+    "build:clean": "rm -fr build",
+    "prebuild": "npm run build:clean",
+    "start:prod": "npm run build && node./build/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.22.9",
     "@sendgrid/mail": "^7.7.0",
     "axios": "^1.4.0",
     "bcrypt": "^5.1.0",
