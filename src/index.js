@@ -24,7 +24,7 @@ connectDB(process.env.MONGO_URI)
 app.use(express.json()) // help in parsing json data in req body and make it accessible to req.body
 app.use(limiter)
 app.use('/users', usersRouter)
-app.use('/payments', paymentRouter)
+app.use('/initializePayments', paymentRouter);
 app.use('/companies', companiesRouter)
 
 app.get("/", (req, res) => {

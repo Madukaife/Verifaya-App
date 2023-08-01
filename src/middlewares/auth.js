@@ -13,7 +13,7 @@ async function authenticate(req, res, next) {
         }
         const token = authorization.substring(7)
         
-        const decodedUser = await jwt.decode(token)
+        const decodedUser = jwt.decode(token)
         
         const foundStaff = await Staff.findOne({_id: decodedUser._id})
         
@@ -34,12 +34,12 @@ module.exports = {
     authenticate
 }
 
-const request = {
-    headers: {
-        "Content-Type": "application/json",
-        authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxpbnVzQGdtYWlsLmNvbSIsImZpcnN0TmFtZSI6IkxpbnVzIiwicm9sZSI6ImFkbWluIiwiX2lkIjoiNjRhNDE3MTYxYzI1YzkwNDVlOWEyMTI5IiwiaWF0IjoxNjg4NTU3ODEwLCJleHAiOjE2OTExNDk4MTB9.dWMRn39YhFOXq1VxqbicKVPohGKxVFa_8iLtcp_jy-A" 
-    },
-    body: {
+// const request = {
+//     headers: {
+//         "Content-Type": "application/json",
+//         authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImxpbnVzQGdtYWlsLmNvbSIsImZpcnN0TmFtZSI6IkxpbnVzIiwicm9sZSI6ImFkbWluIiwiX2lkIjoiNjRhNDE3MTYxYzI1YzkwNDVlOWEyMTI5IiwiaWF0IjoxNjg4NTU3ODEwLCJleHAiOjE2OTExNDk4MTB9.dWMRn39YhFOXq1VxqbicKVPohGKxVFa_8iLtcp_jy-A" 
+//     },
+//     body: {
 
-    }
-}
+//     }
+// }

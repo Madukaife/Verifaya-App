@@ -88,9 +88,9 @@ const login = async (payload) => {
 async function getAllCompanies() {
     try {
       const companies = await Company.find();
-      return responses.buildSuccessResponse('Successfully fetched all companies', 200, companies);
+      return responses.buildSuccessResponse("Successfully fetched all companies", 200, companies);
     } catch (error) {
-      return responses.buildFailureResponse('Failed to fetch companies', 500);
+      return responses.buildFailureResponse("Failed to fetch companies", 500);
     }
   }
   
@@ -110,13 +110,13 @@ const forgotPassword = async (payload) => {
 
     const forgotPasswordPayload = {
         to: updatedUser.email,
-        subject: 'RESET PASSWORD',
+        subject: "RESET PASSWORD",
         pin: resetPin,
     };
       
     sendMail.sendForgotPasswordMail(forgotPasswordPayload);
     return responses.buildSuccessResponse(
-        'Forgot Password Successful',
+        "Forgot Password Successful",
         200,
         updatedUser
     );
@@ -127,7 +127,7 @@ const resetPassword = async (payload) => {
    
     const foundUserAndPin = await Staff.findOne({email: payload.email,resetPin: payload.resetPin, });
     if (!foundUserAndPin) {
-      return responses.buildFailureResponse('Reset Pin Invalid', 400);
+      return responses.buildFailureResponse("Reset Pin Invalid", 400);
     };
     const saltRounds = 10;
     const generatedSalt = await bcrypt.genSalt(saltRounds);
@@ -141,7 +141,7 @@ const resetPassword = async (payload) => {
     );
   
     return responses.buildSuccessResponse(
-      'Password Reset Successful',
+      "Password Reset Successful",
       200,
       updatedUser
     );
@@ -162,9 +162,9 @@ async function searchStaff(query) {
       }
       : {};
     const foundStaff = await Staff.find(searchedStaff);
-    return responses.buildSuccessResponse('Successfully fetched staff', 200, foundStaff);
+    return responses.buildSuccessResponse("Successfully fetched staff", 200, foundStaff);
   } catch (error) {
-    return responses.buildFailureResponse('Failed to fetch staff', 500);
+    return responses.buildFailureResponse("Failed to fetch staff", 500);
   }
 }
   

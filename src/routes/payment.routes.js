@@ -1,19 +1,10 @@
-const express = require("express")
+const express = require('express');
+const router = express.Router();
+const paymentController = require("../controllers/payment.controllers");
+const authMiddleware = require("../middlewares/auth");
 
-const router = express.Router()
+// router.post('/payment', paymentController.InitializePayment);
 
-router.post('/pay', (req, res) => {
-    console.log(req.body)
-    res.status(200).json({
-        message: "Login successful"
-    })
-})
-
-router.get('/receipt', (req, res) => {
-    console.log(req.body)
-    res.status(200).json({
-        message: "This is your receipt"
-    })
-})
+router.post('/payment',authMiddleware.authenticate,paymentController.InitializePayment);
 
 module.exports = router
