@@ -5,6 +5,7 @@ const authMiddleware = require("../middlewares/auth");
 
 // router.post('/payment', paymentController.InitializePayment);
 
-router.post('/payment',authMiddleware.authenticate,paymentController.InitializePayment);
+router.post('/payment', authMiddleware.authenticate, paymentController.InitializePayment);
+router.post('/webhook', paymentController.paystackWebhook);
 
 module.exports = router

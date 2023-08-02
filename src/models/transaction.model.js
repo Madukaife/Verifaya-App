@@ -20,7 +20,22 @@ const transactionSchema = new mongoose.Schema({
     user: {
         type: mongoose.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    ipAdress: {
+        type: String,
+      },
+      currency: {
+        type: String,
+      },
+      channel: {
+        type: String,
+      },
+      transactionId: {
+        type: Number,
+      },
+      paidAt: {
+        type: Date,
+      },
 }, {
     timestamps: true
 })

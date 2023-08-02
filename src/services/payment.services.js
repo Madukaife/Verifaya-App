@@ -20,14 +20,36 @@ const initiatePayment = async (user) => {    // user is what controller will pas
 
       const response = await axios.post(process.env.PAYSTACK_URL, body, options);
       const paymentLink = response.data;
-      await Transaction.create(body);
+      await Transaction.create({...body, amount:body.amount/100});
         return responses.buildSuccessResponse("Transaction Initialized", 200, paymentLink)
     } catch (error) {
         console.log(error);
         return responses.buildFailureResponse(error?.message, error?.statusCode)
     }
 }
-
+const paystackWebhook = async (payload) => {
+  try {
+    const foundPayment = await Transaction.findOne({ reference: payload.data.reference });
+    const updateData = {
+      transactionId: payload.data.id,
+      channel: payload.data.channel,
+      currency: payload.data.currency,
+      ipAddress: payload.data.ip_address,
+      paidAt: payload.data.paidAt,
+      status: payload.data.status,
+    };
+    const updatedTransaction = await Transaction.findByIdAndUpdate(
+      { _id: foundPayment._id },
+      updateData,
+      { new: true }
+    );
+    
+    return responses.buildSuccessResponse("transcation Noted", 200);
+  } catch (error) {
+    console.log(error)
+  }
+}
 module.exports = {
-    initiatePayment
+  initiatePayment,
+  paystackWebhook
 }

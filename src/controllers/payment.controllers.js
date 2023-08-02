@@ -16,7 +16,15 @@ const InitializePayment = async (req, res) => {
   }
   
 };
-
+const paystackWebhook = async (req, res) => {
+  try {
+    const data = await paymentService.paystackWebhook(req.body);
+    res.status(data.statusCode).json(data);
+  } catch (error) {
+    console.log({ error });
+  }
+};
 module.exports = {
-  InitializePayment
+  InitializePayment,
+  paystackWebhook
 };
